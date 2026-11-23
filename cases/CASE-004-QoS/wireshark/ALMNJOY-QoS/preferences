@@ -1,0 +1,15 @@
+# ALMNJOY-QoS profile (CASE-004 QoS / CASE-005 NetFlow). Wireshark 4.x.
+# Columns: who, which VLAN, which DSCP, which TCP stream. That's the whole QoS story on one line.
+gui.column.format: 
+	"No.", "%m",
+	"Time", "%Rt",
+	"VLAN", "%Cus:vlan.id:0:R",
+	"Source", "%s",
+	"Destination", "%d",
+	"Proto", "%p",
+	"DSCP", "%Cus:ip.dsfield.dscp:0:R",
+	"Sport", "%Cus:tcp.srcport:0:R",
+	"Dport", "%Cus:tcp.dstport:0:R",
+	"Stream", "%Cus:tcp.stream:0:R",
+	"Len", "%L",
+	"Info", "%i"

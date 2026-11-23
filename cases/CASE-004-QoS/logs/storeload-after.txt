@@ -1,0 +1,29 @@
+RTL1-REG1:~$ storeload run -t 40
+storeload run for 40s, 4 batch streams, marking OFF (DSCP 0)
+17:50:15 checkout   1 APPROVED      65 ms 
+17:50:18 checkout   2 APPROVED    1049 ms 
+17:50:19 checkout   3 APPROVED      47 ms 
+17:50:21 checkout   4 APPROVED      47 ms 
+17:50:23 checkout   5 APPROVED      34 ms 
+17:50:25 checkout   6 APPROVED      48 ms 
+17:50:27 checkout   7 APPROVED      50 ms 
+17:50:29 checkout   8 APPROVED      63 ms 
+17:50:31 checkout   9 APPROVED      59 ms 
+17:50:33 checkout  10 APPROVED      49 ms 
+17:50:35 checkout  11 APPROVED      38 ms 
+17:50:37 checkout  12 APPROVED      73 ms 
+17:50:39 checkout  13 APPROVED     115 ms 
+17:50:41 checkout  14 APPROVED      43 ms 
+17:50:43 checkout  15 APPROVED      59 ms 
+17:50:45 checkout  16 APPROVED      44 ms 
+17:50:47 checkout  17 APPROVED      31 ms 
+17:50:49 checkout  18 APPROVED      49 ms 
+17:50:51 checkout  19 APPROVED      83 ms 
+17:50:53 checkout  20 APPROVED     120 ms 
+== summary
+batch upload: 29.5 kbps average
+checkouts: 20/20 approved (100%), median 50 ms, worst 1049 ms
+RTL1-REG1:~$ ^C
+
+
+For review in pcaps, we can see the the difference, DCSP tagging , etc. 

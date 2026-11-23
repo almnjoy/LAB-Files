@@ -1,0 +1,11 @@
+# ALMNJOY-QoS coloring rules (first match wins)
+@TCP trouble (retrans/lost/dup-ack)@tcp.analysis.retransmission || tcp.analysis.fast_retransmission || tcp.analysis.lost_segment || tcp.analysis.duplicate_ack@[0,0,0][63479,45232,45232]
+@TCP reset@tcp.flags.reset == 1@[65535,65535,65535][41891,8224,8224]
+@AF21 payment (marked)@ip.dsfield.dscp == 18@[0,0,0][47031,54227,63222]
+@AF11 batch (marked)@ip.dsfield.dscp == 10@[0,0,0][64507,53970,48573]
+@CS6 routing (EIGRP/OSPF)@ip.dsfield.dscp == 48@[0,0,0][55769,53970,63479]
+@EF voice@ip.dsfield.dscp == 46@[0,0,0][49087,59881,51657]
+@Payment NOT marked yet@tcp.port == 19090 && ip.dsfield.dscp == 0@[7196,23644,43947][65535,65535,65535]
+@Batch NOT marked yet@tcp.port == 9000 && ip.dsfield.dscp == 0@[46260,18504,7196][65535,65535,65535]
+@ESP unmarked@esp && ip.dsfield.dscp == 0@[21074,20817,20046][61166,61166,60138]
+@L2 noise@stp || lldp || cdp || loop || arp || dhcp@[39578,39064,37008][65535,65535,65535]

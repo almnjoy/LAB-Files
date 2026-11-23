@@ -1,0 +1,19 @@
+RTL1-REG1:~$ storeload run -t 40
+storeload run for 40s, 4 batch streams, marking OFF (DSCP 0)
+18:01:24 checkout   1 APPROVED    3015 ms 
+18:01:32 checkout   2 APPROVED    8577 ms 
+18:01:35 checkout   3 APPROVED    2905 ms 
+18:01:40 checkout   4 APPROVED    4577 ms 
+18:01:47 checkout   5 APPROVED    7493 ms 
+18:01:51 checkout   6 APPROVED    3324 ms 
+18:01:55 checkout   7 APPROVED    4021 ms 
+18:01:59 checkout   8 APPROVED    4211 ms 
+18:02:05 checkout   9 FAILED      6251 ms TimeoutError: timed out
+== summary
+batch upload: 24.6 kbps average
+checkouts: 8/9 approved (89%), median 4116 ms, worst 8577 ms
+
+
+IN CAPTURES--- 
+We can see the traffic, we can outline the drops if possible, statistics, etc. 
+Like DEEP BREAKDOWN
