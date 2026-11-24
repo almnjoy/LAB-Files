@@ -11,6 +11,7 @@ Every case is a real fault built and broken on Cisco Modeling Labs (the ALMNJOY-
 |---|---|---|---|
 | **CASE-004** · Cards Time Out at Closing | QoS: classify, mark, LLQ, shape over DMVPN | Final config, before/after pcaps at 3 points, Wireshark profile, analyzer before/after reports | [cases/CASE-004-QoS](cases/CASE-004-QoS/) |
 | **CASE-008** · Spanning Tree | MST root move across two port-channels | 4 pcaps (every bundle member), breakdown, analyzer report with the port-role timeline | [cases/CASE-008-STP](cases/CASE-008-STP/) |
+| **CASE-009** · ISP A Is About to Shut the Session | eBGP dual-homed edge, IP SLA + EEM soft failover | 4 pcaps (both ends of both ISP links), message-by-message BGP breakdown, analyzer report with byte-level packet cards | [cases/CASE-009-BGP](cases/CASE-009-BGP/) |
 
 ## How every case folder is laid out
 
