@@ -1,0 +1,16 @@
+# ALMNJOY-BGP profile (CASE-009 BGP + IP SLA). Wireshark 4.x.
+# Columns: clock time, who sent it, which BGP message (one number per message in the segment), prefixes, TTL.
+gui.column.format: 
+	"No.", "%m",
+	"Clock", "%At",
+	"Delta", "%Tt",
+	"Source", "%s",
+	"Destination", "%d",
+	"Proto", "%p",
+	"BGP type", "%Cus:bgp.type:0:R",
+	"Prefixes", "%Cus:bgp.nlri_prefix:0:R",
+	"Withdrawn", "%Cus:bgp.withdrawn_prefix:0:R",
+	"TTL", "%Cus:ip.ttl:0:R",
+	"Len", "%L",
+	"Info", "%i"
+gui.time_format: ABSOLUTE

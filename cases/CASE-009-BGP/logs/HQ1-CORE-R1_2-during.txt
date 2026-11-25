@@ -1,0 +1,66 @@
+HQ1-CORE-R1#show track 10
+Track 10
+  IP SLA 10 reachability
+  Reachability is Down
+    3 changes, last change 00:00:38
+  Delay up 30 secs, down 10 secs
+  Latest operation return code: Timeout
+  Tracked by:
+    EEM applet ISPA-SOFT-UP 
+    EEM applet ISPA-SOFT-DOWN 
+HQ1-CORE-R1#show ip sla statistics 10
+IPSLAs Latest Operation Statistics
+
+IPSLA operation id: 10
+        Latest RTT: NoConnection/Busy/Timeout
+Latest operation start time: 11:12:49 CST Wed Nov 25 2026
+Latest operation return code: Timeout
+Number of successes: 18
+Number of failures: 11
+Operation time to live: Forever
+
+
+HQ1-CORE-R1#show ip bgp summary
+BGP router identifier 10.255.1.1, local AS number 65001
+BGP table version is 75, main routing table version 75
+7 network entries using 1736 bytes of memory
+8 path entries using 1088 bytes of memory
+8/6 BGP path/bestpath attribute entries using 2432 bytes of memory
+4 BGP AS-PATH entries using 128 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 5384 total bytes of memory
+BGP activity 20/13 prefixes, 59/51 paths, scan interval 60 secs
+7 networks peaked at 22:43:20 Nov 8 2026 CST (2w2d ago)
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.255.1.2      4        65001    2773    2766       75    0    0 1d17h           6
+100.100.255.1   4        65100       0       0        1    0    0 00:00:38 Idle (Admin)
+HQ1-CORE-R1#show logging | include ISP A|BGP-5
+Nov 23 15:23:03.472 CST: %BGP-5-ADJCHANGE: neighbor 10.255.1.2 Down User reset
+Nov 23 17:44:19.879 CST: %BGP-5-ADJCHANGE: neighbor 10.255.1.2 Up 
+Nov 23 18:04:48.973 CST: %PARSER-5-CFGLOG_LOGGEDCMD: User:labadmin  logged command:action 5.0 syslog msg "ISP A failed past the edge (track 10 down): BGP to ISP A shut"
+Nov 23 18:05:17.596 CST: %PARSER-5-CFGLOG_LOGGEDCMD: User:labadmin  logged command:action 5.0 syslog msg "ISP A healthy again (track 10 up): BGP to ISP A back"
+Nov 23 18:12:53.262 CST: %BGP-5-NBR_RESET: Neighbor 100.100.255.1 reset (Admin. shutdown)
+Nov 23 18:12:53.265 CST: %BGP-5-ADJCHANGE: neighbor 100.100.255.1 Down Admin. shutdown
+Nov 23 18:12:53.423 CST: %HA_EM-6-LOG: ISPA-SOFT-DOWN: ISP A failed past the edge (track 10 down): BGP to ISP A shut
+Nov 23 18:18:35.640 CST: %BGP-5-ADJCHANGE: neighbor 100.100.255.1 Up 
+Nov 25 11:10:29.385 CST: %PARSER-5-CFGLOG_LOGGEDCMD: User:console  logged command:action 5.0 syslog msg "ISP A failed past the edge (track 10 down): BGP to ISP A shut"
+Nov 25 11:10:29.647 CST: %PARSER-5-CFGLOG_LOGGEDCMD: User:console  logged command:action 5.0 syslog msg "ISP A healthy again (track 10 up): BGP to ISP A back"
+Nov 25 11:11:04.799 CST: %HA_EM-6-LOG: ISPA-SOFT-UP: ISP A healthy again (track 10 up): BGP to ISP A back
+Nov 25 11:12:14.636 CST: %BGP-5-NBR_RESET: Neighbor 100.100.255.1 reset (Admin. shutdown)
+Nov 25 11:12:14.639 CST: %BGP-5-ADJCHANGE: neighbor 100.100.255.1 Down Admin. shutdown
+Nov 25 11:12:14.743 CST: %HA_EM-6-LOG: ISPA-SOFT-DOWN: ISP A failed past the edge (track 10 down): BGP to ISP A shut
+HQ1-CORE-R1#show ip route 0.0.0.0
+Routing entry for 0.0.0.0/0, supernet
+  Known via "ospf 1", distance 110, metric 100, candidate default path
+  Tag 1, type extern 2, forward metric 20
+  Last update from 10.1.255.2 on Ethernet0/0, 00:00:40 ago
+  Routing Descriptor Blocks:
+  * 10.1.255.6, from 10.255.1.2, 00:00:40 ago, via Ethernet0/1
+      Route metric is 100, traffic share count is 1
+      Route tag 1
+    10.1.255.2, from 10.255.1.2, 00:00:40 ago, via Ethernet0/0
+      Route metric is 100, traffic share count is 1
+      Route tag 1
+HQ1-CORE-R1#
