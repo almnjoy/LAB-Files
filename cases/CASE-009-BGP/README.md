@@ -83,14 +83,21 @@ What fits the logs: during the break R1's default route is OSPF via R2 (`_2-duri
 
 ## On your own in Wireshark
 
-![Wireshark with the ALMNJOY-BGP profile: probes, NOTIFICATION, refused SYNs, OPEN, table](img/wireshark-walkthrough.gif)
+**The ISP A link (P1): down and back**
 
-*Real Wireshark 4.2 with the ALMNJOY-BGP profile, clicking the filter buttons. The highlighted field's bytes light up in the byte pane.*
+![P1 in Wireshark with the ALMNJOY-BGP profile: keepalive, probes refused, NOTIFICATION, refused reconnects, OPEN, route refresh, table](img/isp-a-down-and-back.gif)
 
-| NOTIFICATION: minor code 02 selected | OPEN: My AS `fd e9` selected | Frame 121: 8 BGP messages, End-of-RIB selected |
+**The ISP B link (P2): ISP B reacts, and the loop**
+
+![P2 in Wireshark: ISP B's UPDATE, the looping FINs, the TTL-exceeded quoting TTL 1](img/isp-b-and-the-loop.gif)
+
+*Real Wireshark 4.2 with the ALMNJOY-BGP profile, driven by a script (`wireshark/shots.json`). Each step applies a filter, selects the packet and the key field; Wireshark lights up that field's bytes on the right.*
+
+| | | |
 |---|---|---|
-| ![](img/wireshark-notification-cease-admin-shutdown.png) | ![](img/wireshark-open-my-as.png) | ![](img/wireshark-one-segment-eight-messages.png) |
-
+| ![](img/wireshark-keepalive.png) KEEPALIVE: header only | ![](img/wireshark-probe-refused.png) Probe refused: ICMP 3/13 | ![](img/wireshark-notification-cease-admin-shutdown.png) NOTIFICATION: `06 02` |
+| ![](img/wireshark-open-my-as.png) OPEN: My AS `fd e9` | ![](img/wireshark-open-capabilities.png) OPEN: capabilities | ![](img/wireshark-route-refresh-borr.png) ROUTE-REFRESH: BoRR |
+| ![](img/wireshark-one-segment-eight-messages.png) Frame 121: 8 messages, End-of-RIB | ![](img/wireshark-ispb-update.png) ISP B's UPDATE | ![](img/wireshark-ttl-exceeded.png) TTL-exceeded: quoted TTL 1 |
 
 1. Import `wireshark/ALMNJOY-BGP-profile.zip` (Edit > Configuration Profiles > Import from zip) and switch to **ALMNJOY-BGP**. The columns show clock time, the BGP type of every message in the segment, prefixes, withdrawn prefixes and TTL. Colors: NOTIFICATION red, OPEN green, UPDATE blue, End-of-RIB pale blue, ROUTE-REFRESH purple, TTL-exceeded orange.
 2. Open **P1**. Click the buttons in order:

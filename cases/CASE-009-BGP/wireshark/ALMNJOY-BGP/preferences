@@ -13,4 +13,3 @@ gui.column.format:
 	"TTL", "%Cus:ip.ttl:0:R",
 	"Len", "%L",
 	"Info", "%i"
-gui.time_format: ABSOLUTE

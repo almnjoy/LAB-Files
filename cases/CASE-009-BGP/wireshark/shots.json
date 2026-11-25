@@ -1,0 +1,34 @@
+{
+  "profile": "ALMNJOY-BGP",
+  "out": "../img",
+  "gifs": [
+    {
+      "name": "isp-a-down-and-back",
+      "pcap": "../pcaps/P1-ISPA-link_HQ1-CORE-R1-Et0-2.pcap",
+      "seconds": 3.2,
+      "steps": [
+        {"filter": "", "caption": "P1: the ISP A link at HQ1-CORE-R1 Et0/2, colored by the ALMNJOY-BGP profile"},
+        {"filter": "bgp.type == 4", "row": 1, "field": "end", "caption": "KEEPALIVE: 19 bytes, header only. Type 04 just restarts the hold timer", "still": "keepalive"},
+        {"filter": "icmp && ip.addr == 100.200.1.1", "caption": "IP SLA 10: echo to 100.200.1.1 every 5 s. Replies stop at 11:11:54"},
+        {"filter": "icmp.type == 3 && icmp.code == 13", "row": 1, "field": 2, "caption": "Probe refused: ICMP type 3 code 13, administratively prohibited (the ACL)", "still": "probe-refused"},
+        {"filter": "bgp.type == 3", "row": 1, "field": "end", "caption": "NOTIFICATION 15.4 s later: Cease (06) / Administrative shutdown (02)", "still": "notification-cease-admin-shutdown"},
+        {"filter": "tcp.port == 179 && (tcp.flags.syn == 1 || tcp.flags.reset == 1)", "caption": "ISP A knocks 9 times, every SYN gets a RST. The last SYN is R1's own, accepted"},
+        {"filter": "bgp.type == 1", "row": 1, "field": 5, "caption": "OPEN: My AS 65001 (fd e9), hold 180 s, router ID 10.255.1.1", "still": "open-my-as"},
+        {"filter": "bgp.type == 1", "row": 1, "field": "end", "caption": "Capabilities: MP IPv4 unicast, route refresh (128 + 2), enhanced RR (70), 4-byte AS (65)", "still": "open-capabilities"},
+        {"filter": "bgp.type == 5", "row": 1, "field": 5, "caption": "ROUTE-REFRESH subtype 1 = BoRR: the table resend starts here", "still": "route-refresh-borr"},
+        {"filter": "bgp.type == 2 || bgp.type == 5", "row": 2, "field": "end", "caption": "Frame 121: one TCP segment, 8 BGP messages. Last one is End-of-RIB (attributes length 0)", "still": "one-segment-eight-messages"}
+      ]
+    },
+    {
+      "name": "isp-b-and-the-loop",
+      "pcap": "../pcaps/P2-ISPB-link_HQ1-CORE-R2-Et0-2.pcap",
+      "seconds": 3.2,
+      "steps": [
+        {"filter": "", "caption": "P2: the ISP B link at HQ1-CORE-R2 Et0/2, same clock as P1"},
+        {"filter": "bgp.type == 2", "row": 1, "field": "end", "caption": "11:12:14.644, 7 ms after R1's NOTIFICATION: ISP B offers 198.51.100.0/25, path 65200 65100 65001", "still": "ispb-update"},
+        {"filter": "icmp.type == 11 || ip.dst == 198.51.100.10", "caption": "The loop: FINs for 198.51.100.10 arrive with TTL 115, HQ answers TTL exceeded ~64 ms later"},
+        {"filter": "icmp.type == 11", "row": 1, "field": "end", "caption": "Inside the TTL-exceeded: the quoted packet died with TTL 1, about 114 hops after this wire", "still": "ttl-exceeded"}
+      ]
+    }
+  ]
+}
